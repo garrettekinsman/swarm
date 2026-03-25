@@ -1,0 +1,9 @@
+*.log
+__pycache__/
+*.pyc
+.DS_Store
+ios-swarm-*.log
+*.session
+*secrets*
+*config.yaml
+*.env
