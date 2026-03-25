@@ -1,0 +1,108 @@
+import SwiftUI
+
+struct ContactRow: View {
+    let pubkey: String
+    let isSelected: Bool
+    let lastMessage: String
+    let timestamp: Date?
+    
+    @State private var isHovered = false
+    
+    private var displayName: String {
+        guard pubkey.count >= 8 else { return pubkey }
+        return "\(pubkey.prefix(6))…\(pubkey.suffix(6))"
+    }
+    
+    private var avatarFallback: String {
+        let emojis = ["🔮", "⚡️", "🌙", "🔥", "💎"]
+        let emoji = emojis[abs(pubkey.hashValue) % emojis.count]
+        return "\(emoji)"
+    }
+    
+    private var relativeTimestamp: String {
+        guard let timestamp = timestamp else { return "" }
+        let interval = Date().timeIntervalSince(timestamp)
+        
+        if interval < 60 {
+            return "now"
+        } else if interval < 3600 {
+            let minutes = Int(interval / 60)
+            return "\(minutes)m"
+        } else if interval < 86400 {
+            let hours = Int(interval / 3600)
+            return "\(hours)h"
+        } else {
+            let days = Int(interval / 86400)
+            return "\(days)d"
+        }
+    }
+    
+    var body: some View {
+        HStack(alignment: .top, spacing: 12) {
+            avatarView
+            
+            VStack(alignment: .leading, spacing: 4) {
+                HStack(alignment: .top) {
+                    Text(displayName)
+                        .font(.system(size: 17, weight: .semibold))
+                        .foregroundStyle(Color(red: 0.961, green: 0.961, blue: 0.969, opacity: 1.0))
+                        .lineLimit(1)
+                    
+                    Spacer(minLength: 8)
+                    
+                    Text(relativeTimestamp)
+                        .font(.system(size: 13))
+                        .foregroundStyle(Color(red: 0.580, green: 0.608, blue: 0.643, opacity: 1.0))
+                }
+                
+                Text(lastMessage)
+                    .font(.system(size: 15))
+                    .foregroundStyle(Color(red: 0.580, green: 0.608, blue: 0.643, opacity: 1.0))
+                    .lineLimit(2)
+            }
+        }
+        .padding(.horizontal, 16)
+        .padding(.vertical, 16)
+        .frame(minHeight: 88)
+        .background(
+            Group {
+                if isSelected {
+                    Color(red: 0.173, green: 0.173, blue: 0.180, opacity: 1.0)
+                } else if isHovered {
+                    Color(red: 0.102, green: 0.102, blue: 0.102, opacity: 0.5)
+                } else {
+                    Color.clear
+                }
+            }
+        )
+        .onHover { hovering in
+            withAnimation(.easeInOut(duration: 0.15)) {
+                isHovered = hovering
+            }
+        }
+    }
+    
+    private var avatarView: some View {
+        ZStack(alignment: .bottomTrailing) {
+            Circle()
+                .fill(Color(red: 0.173, green: 0.173, blue: 0.180, opacity: 1.0))
+                .overlay {
+                    Text(avatarFallback)
+                        .font(.system(size: 24))
+                }
+                .frame(width: 56, height: 56)
+            
+            if Bool.random() {
+                Circle()
+                    .fill(Color(red: 0.137, green: 0.647, blue: 0.353, opacity: 1.0))
+                    .frame(width: 16, height: 16)
+                    .overlay {
+                        Circle()
+                            .strokeBorder(Color(red: 0.051, green: 0.051, blue: 0.051, opacity: 1.0), lineWidth: 2)
+                    }
+                    .offset(x: 2, y: 2)
+            }
+        }
+        .frame(width: 56, height: 56)
+    }
+}

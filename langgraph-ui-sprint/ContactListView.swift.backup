@@ -1,0 +1,159 @@
+import SwiftUI
+
+struct ContactListView: View {
+    @EnvironmentObject private var nostrService: NostrService
+    @EnvironmentObject private var keysManager: KeysManager
+    @EnvironmentObject private var messageStore: MessageStore
+    
+    @Binding var selectedContactPubkey: String?
+    @State private var searchText = ""
+    
+    private var uniqueContactPubkeys: [String] {
+        let currentUserPubkey = keysManager.currentKeypair?.publicKey.hex ?? ""
+        var pubkeys = Set<String>()
+        
+        for message in messageStore.allMessages {
+            if message.senderPubkey != currentUserPubkey {
+                pubkeys.insert(message.senderPubkey)
+            }
+            if message.recipientPubkey != currentUserPubkey {
+                pubkeys.insert(message.recipientPubkey)
+            }
+        }
+        
+        return Array(pubkeys).sorted()
+    }
+    
+    private var filteredContacts: [String] {
+        if searchText.isEmpty {
+            return uniqueContactPubkeys
+        }
+        return uniqueContactPubkeys.filter { pubkey in
+            pubkey.localizedCaseInsensitiveContains(searchText)
+        }
+    }
+    
+    var body: some View {
+        VStack(spacing: 0) {
+            searchBar
+            
+            if filteredContacts.isEmpty {
+                emptyState
+            } else {
+                contactList
+            }
+        }
+        .frame(minWidth: 280, idealWidth: 320, maxWidth: 400)
+        .background(Color(red: 0.051, green: 0.051, blue: 0.051, opacity: 1.0))
+        .toolbar {
+            ToolbarItem(placement: .primaryAction) {
+                toolbarButtons
+            }
+        }
+        .navigationTitle("EldrChat")
+    }
+    
+    private var searchBar: some View {
+        HStack(spacing: 8) {
+            Image(systemName: "magnifyingglass")
+                .foregroundStyle(Color(red: 0.580, green: 0.608, blue: 0.643, opacity: 1.0))
+                .font(.system(size: 17))
+            
+            TextField("Search", text: $searchText)
+                .textFieldStyle(.plain)
+                .font(.system(size: 17))
+                .foregroundStyle(Color(red: 0.961, green: 0.961, blue: 0.969, opacity: 1.0))
+        }
+        .padding(.horizontal, 12)
+        .padding(.vertical, 10)
+        .background(Color(red: 0.102, green: 0.102, blue: 0.102, opacity: 1.0))
+        .cornerRadius(10)
+        .padding(16)
+    }
+    
+    private var contactList: some View {
+        List(selection: $selectedContactPubkey) {
+            ForEach(filteredContacts, id: \.self) { pubkey in
+                ContactRow(
+                    pubkey: pubkey,
+                    isSelected: selectedContactPubkey == pubkey,
+                    lastMessage: lastMessage(for: pubkey),
+                    timestamp: lastMessageDate(for: pubkey)
+                )
+                .listRowInsets(EdgeInsets())
+                .listRowSeparator(.hidden)
+                .listRowBackground(
+                    rowBackground(isSelected: selectedContactPubkey == pubkey)
+                )
+                .contentShape(Rectangle())
+                .onTapGesture {
+                    selectedContactPubkey = pubkey
+                }
+            }
+        }
+        .listStyle(.plain)
+        .scrollContentBackground(.hidden)
+    }
+    
+    private var emptyState: some View {
+        VStack(spacing: 16) {
+            Image(systemName: "bubble.left.and.bubble.right.fill")
+                .font(.system(size: 64))
+                .foregroundStyle(Color(red: 0.580, green: 0.608, blue: 0.643, opacity: 0.3))
+                .symbolRenderingMode(.hierarchical)
+            
+            VStack(spacing: 8) {
+                Text("No conversations")
+                    .font(.system(size: 20, weight: .semibold))
+                    .foregroundStyle(Color(red: 0.580, green: 0.608, blue: 0.643, opacity: 1.0))
+                
+                Text("Connect your Nostr key to start chatting")
+                    .font(.system(size: 15))
+                    .foregroundStyle(Color(red: 0.580, green: 0.608, blue: 0.643, opacity: 1.0))
+                    .multilineTextAlignment(.center)
+                    .frame(maxWidth: 280)
+            }
+        }
+        .frame(maxWidth: .infinity, maxHeight: .infinity)
+        .background(Color(red: 0.051, green: 0.051, blue: 0.051, opacity: 1.0))
+    }
+    
+    private var toolbarButtons: some View {
+        HStack(spacing: 16) {
+            Button(action: {}) {
+                Image(systemName: "plus.circle.fill")
+                    .font(.system(size: 24))
+                    .foregroundStyle(Color(red: 0.345, green: 0.396, blue: 0.949, opacity: 1.0))
+            }
+            .buttonStyle(.plain)
+            .frame(width: 44, height: 44)
+            
+            Button(action: {}) {
+                Image(systemName: "gearshape.fill")
+                    .font(.system(size: 24))
+                    .foregroundStyle(Color(red: 0.580, green: 0.608, blue: 0.643, opacity: 1.0))
+            }
+            .buttonStyle(.plain)
+            .frame(width: 44, height: 44)
+        }
+    }
+    
+    private func rowBackground(isSelected: Bool) -> Color {
+        if isSelected {
+            return Color(red: 0.173, green: 0.173, blue: 0.180, opacity: 1.0)
+        } else {
+            return Color.clear
+        }
+    }
+    
+    private func lastMessage(for pubkey: String) -> String {
+        let messages = messageStore.messages(for: pubkey)
+        guard let last = messages.last else { return "No messages yet" }
+        return last.content
+    }
+    
+    private func lastMessageDate(for pubkey: String) -> Date? {
+        let messages = messageStore.messages(for: pubkey)
+        return messages.last?.createdAt
+    }
+}
