@@ -27,12 +27,12 @@ from anthropic import Anthropic
 from langgraph.graph import StateGraph, END
 
 # ── Sanitizer ────────────────────────────────────────────────────────────────
-_SANITIZER_PATH = Path("/Users/garrett/.openclaw/workspace/projects/agent-collaboration")
+_SANITIZER_PATH = Path("~/.openclaw/workspace/projects/agent-collaboration")
 sys.path.insert(0, str(_SANITIZER_PATH))
 from sanitizer_v2 import sanitize_text, sanitize_pipeline_field
 
 # ── Paths ─────────────────────────────────────────────────────────────────────
-WORKSPACE       = Path("/Users/garrett/.openclaw/workspace/projects/eldrchat")
+WORKSPACE       = Path("~/.openclaw/workspace/projects/eldrchat")
 OUTPUT_DIR      = WORKSPACE / "langgraph-ui-sprint" / "web-test"
 LOG_DIR         = WORKSPACE / "langgraph-ui-sprint"
 OUTPUT_DIR.mkdir(parents=True, exist_ok=True)

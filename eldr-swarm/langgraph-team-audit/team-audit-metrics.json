@@ -5,7 +5,7 @@
   "build_success": false,
   "screenshot": "",
   "issues_count": 0,
-  "log_file": "/Users/garrett/.openclaw/workspace/projects/eldrchat/langgraph-team-audit/team-audit-20260324-161930.log",
+  "log_file": "~/.openclaw/workspace/projects/eldrchat/langgraph-team-audit/team-audit-20260324-161930.log",
   "coder_fallback": true,
   "coder_model_used": "anthropic/claude-opus-4-6",
   "coder_fallback_events": [

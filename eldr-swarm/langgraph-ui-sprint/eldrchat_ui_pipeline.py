@@ -29,9 +29,9 @@ ANTHROPIC_API_KEY = os.environ.get("ANTHROPIC_API_KEY", "")
 CLIENT = anthropic.Anthropic(api_key=ANTHROPIC_API_KEY)
 MODEL = "claude-sonnet-4-6"
 
-WORKSPACE = Path("/Users/garrett/.openclaw/workspace/projects/eldrchat")
+WORKSPACE = Path("~/.openclaw/workspace/projects/eldrchat")
 SOURCE_DIR = WORKSPACE / "EldrChat/Sources/EldrChat"
-MEDIA_DIR = Path("/Users/garrett/.openclaw/media")
+MEDIA_DIR = Path("~/.openclaw/media")
 OUTPUT_DIR = WORKSPACE / "langgraph-ui-sprint"
 OUTPUT_DIR.mkdir(exist_ok=True)
 

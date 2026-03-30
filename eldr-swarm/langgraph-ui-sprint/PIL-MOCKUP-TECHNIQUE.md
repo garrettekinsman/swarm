@@ -69,7 +69,7 @@ PIL (`Pillow`) is used to draw a schematic representation of the HTML page struc
 
 4. **Save:**
    ```python
-   img.save("/Users/garrett/.openclaw/media/eldr-swarm-mockup.png")
+   img.save("~/.openclaw/media/eldr-swarm-mockup.png")
    ```
 
 ---

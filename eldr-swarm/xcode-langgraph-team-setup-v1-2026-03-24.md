@@ -935,7 +935,7 @@ system = [
 
 Before starting a pipeline run, pre-load qwen3-coder-next:
 ```bash
-curl -s http://100.112.143.23:11434/api/generate \
+curl -s http://<FRAMEWORK1_TAILSCALE_IP>:11434/api/generate \
   -d '{"model":"qwen3-coder-next:latest","prompt":"warmup","keep_alive":-1}' \
   | jq -r .response
 ```
@@ -1325,10 +1325,10 @@ open langgraph-team-audit/screenshot-iter5.png
 
 ```bash
 # Check what's loaded on Framework1
-ssh -i ~/.ssh/framework_key gk@100.112.143.23 "ollama ps"
+ssh -i ~/.ssh/framework_key gk@<FRAMEWORK1_TAILSCALE_IP> "ollama ps"
 
 # Pre-warm qwen3-coder-next
-curl -s http://100.112.143.23:11434/api/generate \
+curl -s http://<FRAMEWORK1_TAILSCALE_IP>:11434/api/generate \
   -d '{"model":"qwen3-coder-next:latest","prompt":"warmup","keep_alive":-1}' \
   | jq -r .response
 ```

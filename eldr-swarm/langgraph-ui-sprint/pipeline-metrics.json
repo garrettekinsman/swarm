@@ -2,7 +2,7 @@
   "run_timestamp": "2026-03-24T22:21:21Z",
   "elapsed_seconds": 117,
   "exit_code": 1,
-  "log_file": "/Users/garrett/.openclaw/workspace/projects/eldrchat/langgraph-ui-sprint/pipeline-20260324-151924.log",
+  "log_file": "~/.openclaw/workspace/projects/eldrchat/langgraph-ui-sprint/pipeline-20260324-151924.log",
   "nodes": {
     "garro_design": {
       "status": "done"

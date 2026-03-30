@@ -36,12 +36,12 @@ import requests
 from anthropic import Anthropic
 
 # ── Sanitizer ─────────────────────────────────────────────────────────────────
-_SANITIZER_PATH = Path("/Users/garrett/.openclaw/workspace/projects/agent-collaboration")
+_SANITIZER_PATH = Path("~/.openclaw/workspace/projects/agent-collaboration")
 sys.path.insert(0, str(_SANITIZER_PATH))
 from sanitizer_v2 import sanitize_text, sanitize_pipeline_field
 
 # ── Paths ──────────────────────────────────────────────────────────────────────
-WORKSPACE   = Path("/Users/garrett/.openclaw/workspace/projects/eldrchat")
+WORKSPACE   = Path("~/.openclaw/workspace/projects/eldrchat")
 OUTPUT_DIR  = WORKSPACE / "ios-swarm-output"
 LOG_DIR     = WORKSPACE
 OUTPUT_DIR.mkdir(parents=True, exist_ok=True)
@@ -50,7 +50,7 @@ OUTPUT_DIR.mkdir(parents=True, exist_ok=True)
 TIMESTAMP    = datetime.now().strftime("%Y%m%d-%H%M%S")
 LOG_FILE     = LOG_DIR / f"ios-swarm-{TIMESTAMP}.log"
 METRICS_FILE = LOG_DIR / f"ios-swarm-metrics-{TIMESTAMP}.json"
-AGENTS_DIR   = Path("/Users/garrett/.openclaw/workspace/agents")
+AGENTS_DIR   = Path("~/.openclaw/workspace/agents")
 
 # ── Logging ───────────────────────────────────────────────────────────────────
 logging.basicConfig(

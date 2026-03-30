@@ -706,10 +706,10 @@ Usage: swift build <options>
 ## Screenshots
 
 Old screenshots (for comparison):
-- /Users/garrett/.openclaw/media/eldrchat-ipad-landscape.png
-- /Users/garrett/.openclaw/media/eldrchat-ipad-portrait.png
-- /Users/garrett/.openclaw/media/eldr-contacts-list-ipad-landscape.png
-- /Users/garrett/.openclaw/media/eldr-chat-ipad-landscape.png
+- ~/.openclaw/media/eldrchat-ipad-landscape.png
+- ~/.openclaw/media/eldrchat-ipad-portrait.png
+- ~/.openclaw/media/eldr-contacts-list-ipad-landscape.png
+- ~/.openclaw/media/eldr-chat-ipad-landscape.png
 
 New screenshots:
 - None captured (simulator not running app yet)
@@ -719,7 +719,7 @@ New screenshots:
 ## LangGraph Pipeline Log
 
 Pipeline started
-GARRO spec written to /Users/garrett/.openclaw/workspace/projects/eldrchat/langgraph-ui-sprint/garro-contact-list-spec.md
+GARRO spec written to ~/.openclaw/workspace/projects/eldrchat/langgraph-ui-sprint/garro-contact-list-spec.md
 Coder produced: ['ContentView.swift', 'ContactListView.swift', 'ContactRow.swift']
 Build ❌, screenshots: 0
 GARRO review complete

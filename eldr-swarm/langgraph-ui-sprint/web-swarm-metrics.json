@@ -6,5 +6,5 @@
   "coder_model": "qwen3-coder-next:latest",
   "vera_audit": "No files provided.",
   "issues": [],
-  "log_file": "/Users/garrett/.openclaw/workspace/projects/eldrchat/langgraph-ui-sprint/web-swarm-20260324-171814.log"
+  "log_file": "~/.openclaw/workspace/projects/eldrchat/langgraph-ui-sprint/web-swarm-20260324-171814.log"
 }
